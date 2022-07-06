@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 import FormPresenter from "../components/FormPresenter";
+import ResultPresenter from "../components/ResultPresenter";
 
 const Home: NextPage = () => {
   return (
@@ -22,6 +23,7 @@ const Home: NextPage = () => {
         </p>
 
         <FormPresenter />
+        <ResultPresenter />
       </main>
 
       <footer className={styles.footer}>
