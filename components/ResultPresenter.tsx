@@ -3,17 +3,47 @@ import type { NextPage } from "next";
 
 const ResultPresenter: NextPage = (props) => {
   useEffect(() => {
-    getWeatherData("5", "10");
+    getWeatherData("18", "59");
   }, []);
 
+  const DUMMY_WEATHER = {
+    timeSeries: [
+      {
+        parameters: [{ name: "t", unit: "Cel", values: [-9] }],
+        validTime: "2022-07-14T19:00:00Z",
+      },
+      {
+        parameters: [{ name: "t", unit: "Cel", values: [15] }],
+        validTime: "2022-07-14T20:00:00Z",
+      },
+      {
+        parameters: [{ name: "t", unit: "Cel", values: [20] }],
+        validTime: "2022-07-14T21:00:00Z",
+      },
+      {
+        parameters: [{ name: "t", unit: "Cel", values: [8] }],
+        validTime: "2022-07-14T22:00:00Z",
+      },
+    ],
+  };
+
   const getWeatherData = async (longitude: string, latitude: string) => {
-    const data = await fetch(
-      `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/16/lat/58/data.json`
+    /* const data = await fetch(
+      `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     );
 
-    const weather = await data.json();
+    const weather = await data.json(); */
 
-    console.log(weather);
+    let cleanData: { [key: string]: number } = {};
+
+    DUMMY_WEATHER.timeSeries.forEach((el) => {
+      let val = el.parameters.filter((e) => {
+        cleanData = { ...cleanData, [el.validTime]: e.values[0] };
+        return e.name === "t";
+      });
+    });
+
+    console.log("clean", cleanData);
   };
 
   return <div>ResultPresenter</div>;
