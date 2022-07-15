@@ -36,14 +36,12 @@ const ResultPresenter: NextPage = (props) => {
 
     let cleanData: { [key: string]: number } = {};
 
-    DUMMY_WEATHER.timeSeries.forEach((el) => {
-      let val = el.parameters.filter((e) => {
-        cleanData = { ...cleanData, [el.validTime]: e.values[0] };
-        return e.name === "t";
+    DUMMY_WEATHER.timeSeries.forEach((timeData) => {
+      let weatherData = timeData.parameters.filter((parameter) => {
+        cleanData = { ...cleanData, [timeData.validTime]: parameter.values[0] };
+        return parameter.name === "t";
       });
     });
-
-    console.log("clean", cleanData);
   };
 
   return <div>ResultPresenter</div>;
