@@ -4,8 +4,19 @@ import styles from "../styles/Home.module.css";
 
 import FormPresenter from "../components/FormPresenter";
 import ResultPresenter from "../components/ResultPresenter";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
+  const [coordinates, setCoordinates] = useState<String[]>([]);
+
+  const handleCoordinates = (inputLongitude: string, inputLatitude: string) => {
+    setCoordinates([inputLongitude, inputLatitude]);
+  };
+
+  useEffect(() => {
+    console.log(coordinates);
+  }, [coordinates]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -22,8 +33,8 @@ const Home: NextPage = () => {
           location, please fill in the form below.
         </p>
 
-        <FormPresenter />
-        <ResultPresenter />
+        <FormPresenter handleCoordinates={handleCoordinates} />
+        <ResultPresenter coordinates={coordinates} />
       </main>
 
       <footer className={styles.footer}>
