@@ -21,7 +21,7 @@ const DUMMY_WEATHER = {
     },
     {
       parameters: [{ name: "t", unit: "Cel", values: [8] }],
-      validTime: "2022-07-14T22:00:00Z",
+      validTime: "2022-07-15T19:00:00Z",
     },
   ],
 };
@@ -32,7 +32,7 @@ const ResultPresenter: NextPage<{
   const [weatherData, setWeatherData] = useState<{ [key: string]: number }>({});
 
   const getWeatherData = React.useCallback(
-    async (longitude: string, latitude: string) => {
+    async (longitude: String, latitude: String) => {
       /* const data = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     );
@@ -63,16 +63,16 @@ const ResultPresenter: NextPage<{
   }, [weatherData]);
 
   useEffect(() => {
-    console.log("Results:", props.coordinates);
-  }, [props]);
+    getWeatherData(props.coordinates[0], props.coordinates[1]);
+  }, [props, getWeatherData]);
 
   return (
     <div>
       <div className={styles.container}>
-        <div className={styles.dateColumn}>Date</div>
-        <div className={styles.tempColumn}>Temp</div>
+        <div className={styles.dateColumn}>Datum</div>
+        <div className={styles.tempColumn}>Temperatur</div>
       </div>
-      <DayOverview />
+      <DayOverview weatherData={weatherData} />
     </div>
   );
 };
