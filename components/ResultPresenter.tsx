@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 
+import styles from "../styles/ResultPresenter.module.css";
+
+import DayOverview from "./DayOverview";
+
 const DUMMY_WEATHER = {
   timeSeries: [
     {
@@ -25,7 +29,7 @@ const DUMMY_WEATHER = {
 const ResultPresenter: NextPage<{
   coordinates: String[];
 }> = (props) => {
-  const [weatherData, setWeatherData] = useState<{}>({});
+  const [weatherData, setWeatherData] = useState<{ [key: string]: number }>({});
 
   const getWeatherData = React.useCallback(
     async (longitude: string, latitude: string) => {
@@ -62,7 +66,15 @@ const ResultPresenter: NextPage<{
     console.log("Results:", props.coordinates);
   }, [props]);
 
-  return <div>ResultPresenter</div>;
+  return (
+    <div>
+      <div className={styles.container}>
+        <div className={styles.dateColumn}>Date</div>
+        <div className={styles.tempColumn}>Temp</div>
+      </div>
+      <DayOverview />
+    </div>
+  );
 };
 
 export default ResultPresenter;

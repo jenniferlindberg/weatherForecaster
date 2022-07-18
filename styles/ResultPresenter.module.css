@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  color: white;
+  margin-top: 1vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.dateColumn {
+  background-color: yellow;
+  width: 30vw;
+  border: 1px solid white;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #29bdf2;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
+}
+
+.tempColumn {
+  background-color: pink;
+  width: 60vw;
+  border: 1px solid white;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #29bdf2;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
+}
+
+@media screen and (min-width: 601px) {
+  .container {
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    font-size: 15px;
+  }
+}

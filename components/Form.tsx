@@ -1,15 +1,18 @@
 import type { NextPage } from "next";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useRef } from "react";
 
 const Form: NextPage<{
   handleSubmit: (long: string, lat: string) => void;
 }> = (props) => {
+  // const longRef = useRef<HTMLInputElement | null>(null);
+  // const latRef = useRef<HTMLInputElement | null>(null);
   const [inputLongitude, setInputLongitude] = useState("");
   const [inputLatitude, setInputLatitude] = useState("");
 
   const performSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     props.handleSubmit(inputLongitude, inputLatitude);
+    // props.handleSubmit(longRef.current?.value ?? "", latRef.current?.value ?? "");
   };
 
   return (
@@ -23,6 +26,7 @@ const Form: NextPage<{
           name="longitud"
           placeholder="longitud"
           onChange={(e) => setInputLongitude(e.target.value)}
+          // ref={longRef}
         />
         <br />
         <label htmlFor="latitud">Latitud:</label>
@@ -33,6 +37,7 @@ const Form: NextPage<{
           name="latitud"
           placeholder="latitud"
           onChange={(e) => setInputLatitude(e.target.value)}
+          // ref={latRef}
         />
         <br />
         <button type="submit">Visa Väderprognos</button>

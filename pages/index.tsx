@@ -7,14 +7,14 @@ import ResultPresenter from "../components/ResultPresenter";
 import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
-  const [coordinates, setCoordinates] = useState<String[]>([]);
+  const [coordinates, setCoordinates] = useState<string[]>([]);
 
   const handleCoordinates = (inputLongitude: string, inputLatitude: string) => {
     setCoordinates([inputLongitude, inputLatitude]);
   };
 
   useEffect(() => {
-    console.log(coordinates);
+    console.log({ coordinates });
   }, [coordinates]);
 
   return (
@@ -41,7 +41,11 @@ const Home: NextPage = () => {
         <p>Created by Jennifer Lindberg</p>
         <p>
           Powered by{" "}
-          <a href="https://www.smhi.se/data/oppna-data/meteorologiska-data/api-for-vaderprognosdata-1.34233">
+          <a
+            href="https://www.smhi.se/data/oppna-data/meteorologiska-data/api-for-vaderprognosdata-1.34233"
+            target="_blank"
+            rel="noreferrer"
+          >
             SMHI API
           </a>
         </p>
