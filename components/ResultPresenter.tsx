@@ -26,10 +26,12 @@ const DUMMY_WEATHER = {
   ],
 };
 
+export type WeatherType = { [key: string]: number };
+
 const ResultPresenter: NextPage<{
   coordinates: String[];
 }> = (props) => {
-  const [weatherData, setWeatherData] = useState<{ [key: string]: number }>({});
+  const [weatherData, setWeatherData] = useState<WeatherType>({});
 
   const getWeatherData = React.useCallback(
     async (longitude: String, latitude: String) => {
