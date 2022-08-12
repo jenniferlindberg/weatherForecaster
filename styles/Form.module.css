@@ -1,0 +1,9 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.inputField {
+  margin-right: 1%;
+}

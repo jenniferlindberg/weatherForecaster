@@ -38,6 +38,15 @@
   padding-bottom: 1.5vh;
 }
 
+.list {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.collapse {
+  width: 80vw;
+}
+
 @media screen and (min-width: 601px) {
   .container {
     font-size: 20px;

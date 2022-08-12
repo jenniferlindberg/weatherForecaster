@@ -12,6 +12,18 @@ const DUMMY_WEATHER = {
       validTime: "2022-07-14T19:00:00Z",
     },
     {
+      parameters: [{ name: "t", unit: "Cel", values: [-9] }],
+      validTime: "2022-07-14T20:00:00Z",
+    },
+    {
+      parameters: [{ name: "t", unit: "Cel", values: [-9] }],
+      validTime: "2022-07-14T21:00:00Z",
+    },
+    {
+      parameters: [{ name: "t", unit: "Cel", values: [-9] }],
+      validTime: "2022-07-14T22:00:00Z",
+    },
+    {
       parameters: [{ name: "t", unit: "Cel", values: [15] }],
       validTime: "2022-07-14T20:00:00Z",
     },
@@ -22,6 +34,26 @@ const DUMMY_WEATHER = {
     {
       parameters: [{ name: "t", unit: "Cel", values: [8] }],
       validTime: "2022-07-15T19:00:00Z",
+    },
+    {
+      parameters: [{ name: "t", unit: "Cel", values: [8] }],
+      validTime: "2022-07-15T20:00:00Z",
+    },
+    {
+      parameters: [{ name: "t", unit: "Cel", values: [8] }],
+      validTime: "2022-07-15T21:00:00Z",
+    },
+    {
+      parameters: [{ name: "t", unit: "Cel", values: [8] }],
+      validTime: "2022-07-16T19:00:00Z",
+    },
+    {
+      parameters: [{ name: "t", unit: "Cel", values: [8] }],
+      validTime: "2022-07-16T20:00:00Z",
+    },
+    {
+      parameters: [{ name: "t", unit: "Cel", values: [8] }],
+      validTime: "2022-07-16T21:00:00Z",
     },
   ],
 };
@@ -61,10 +93,6 @@ const ResultPresenter: NextPage<{
   );
 
   useEffect(() => {
-    console.log({ weatherData });
-  }, [weatherData]);
-
-  useEffect(() => {
     getWeatherData(props.coordinates[0], props.coordinates[1]);
   }, [props, getWeatherData]);
 
@@ -74,7 +102,11 @@ const ResultPresenter: NextPage<{
         <div className={styles.dateColumn}>Datum</div>
         <div className={styles.tempColumn}>Temperatur</div>
       </div>
-      <DayOverview weatherData={weatherData} />
+      {Object.keys(weatherData).length !== 0 ? (
+        <DayOverview weatherData={weatherData} />
+      ) : (
+        <React.Fragment></React.Fragment>
+      )}
     </div>
   );
 };

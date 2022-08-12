@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
 import { FormEvent, useState, useRef } from "react";
+import { TextField, Button } from "@mui/material";
+import styles from "../styles/Form.module.css";
 
 const Form: NextPage<{
   handleSubmit: (long: string, lat: string) => void;
@@ -12,23 +14,32 @@ const Form: NextPage<{
   const performSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     props.handleSubmit(inputLongitude, inputLatitude);
-    // props.handleSubmit(longRef.current?.value ?? "", latRef.current?.value ?? "");
   };
 
   return (
-    <div>
-      <form onSubmit={(e) => performSubmit(e)}>
-        <label htmlFor="longitud">Longitud:</label>
-        <br />
-        <input
+    <form onSubmit={(e) => performSubmit(e)} className={styles.container}>
+      {/* <label htmlFor="longitud">Longitud:</label> */}
+      {/* <br /> */}
+      {/* <input
           type="text"
           id="longitud"
           name="longitud"
           placeholder="longitud"
           onChange={(e) => setInputLongitude(e.target.value)}
-          // ref={longRef}
-        />
-        <br />
+        /> */}
+      <TextField
+        id="longitud"
+        label="Longitude"
+        onChange={(e) => setInputLongitude(e.target.value)}
+        className={styles.inputField}
+      />
+      <TextField
+        id="latitud"
+        label="Latitude"
+        onChange={(e) => setInputLatitude(e.target.value)}
+        className={styles.inputField}
+      />
+      {/* <br />
         <label htmlFor="latitud">Latitud:</label>
         <br />
         <input
@@ -38,11 +49,13 @@ const Form: NextPage<{
           placeholder="latitud"
           onChange={(e) => setInputLatitude(e.target.value)}
           // ref={latRef}
-        />
-        <br />
-        <button type="submit">Visa Väderprognos</button>
-      </form>
-    </div>
+        /> */}
+      {/* <br /> */}
+      {/* <button type="submit">Visa Väderprognos</button> */}
+      <Button variant="outlined" type="submit">
+        Show
+      </Button>
+    </form>
   );
 };
 

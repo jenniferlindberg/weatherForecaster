@@ -13,10 +13,6 @@ const Home: NextPage = () => {
     setCoordinates([inputLongitude, inputLatitude]);
   };
 
-  useEffect(() => {
-    console.log({ coordinates });
-  }, [coordinates]);
-
   return (
     <div className={styles.container}>
       <Head>

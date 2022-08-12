@@ -3,6 +3,8 @@ import styles from "../styles/DayOverview.module.css";
 import type { NextPage } from "next";
 import { WeatherType } from "./ResultPresenter";
 
+import Day from "./Day";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
@@ -12,48 +14,84 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TransitionGroup } from "react-transition-group";
+import { ConstructionOutlined } from "@mui/icons-material";
+
+/* 
+    date: {time1: temp1,
+           time2: temp2,
+           time3: temp3} 
+*/
+
+export type CurrDateType = { [key: string]: { [key: string]: number } };
+
+const renderDateDetails = (date: String, temperature: number) => {
+  return (
+    <ListItem>
+      <ListItemText primary={`${date.slice(11, 19)} ${temperature}`} />
+    </ListItem>
+  );
+};
 
 const DayOverview: NextPage<{
   weatherData: WeatherType;
 }> = (props) => {
-  const [midDayData, setMidDayData] = useState<
-    Array<{ dateTime: string; temperature: number }>
-  >([]);
+  const [structuredData, setStructuredData] = useState<CurrDateType>();
+  const [dates, setDates] = useState<string[]>([]);
 
-  const [detailsOpen, setDetailsOpen] = useState<string[]>([]);
+  /* Structure data on render. */
+  useEffect(() => {
+    const data = structureData();
+    setStructuredData(data);
+  }, [props.weatherData]);
 
-  const handleClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    console.log("curr target", e.currentTarget.id);
-    setDetailsOpen([...detailsOpen, e.currentTarget.id]);
+  const structureData = () => {
+    const timeStamps = Object.keys(props.weatherData);
+    let strucData: CurrDateType = {};
+
+    timeStamps.forEach((timeStamp) => {
+      const prevData = strucData;
+      const date = timeStamp.slice(0, 10);
+      const time = timeStamp.slice(11, 19);
+      const temperature = props.weatherData[timeStamp];
+
+      if (!strucData[date]) {
+        strucData = {
+          ...prevData,
+          [date]: { [time]: temperature },
+        };
+      } else {
+        const prevTimesObj = strucData[date];
+        const newTimesObj = {
+          ...prevTimesObj,
+          [time]: temperature,
+        };
+        strucData = { ...prevData, [date]: newTimesObj };
+      }
+    });
+    return strucData;
   };
 
   useEffect(() => {
-    const keys = Object.keys(props.weatherData);
-    const midDayKeys = keys.filter((el) => el.slice(11, 13) === "19");
-
-    setMidDayData(
-      midDayKeys.map((el) => ({
-        dateTime: el,
-        temperature: props.weatherData[el],
-      }))
-    );
+    const dateTimes = Object.keys(props.weatherData);
+    const allDates = dateTimes.map((date) => {
+      return date.slice(0, 10);
+    });
+    const uniqueDates = allDates.filter((date, index) => {
+      return allDates.indexOf(date) === index;
+    });
+    setDates(uniqueDates);
   }, [props.weatherData]);
 
+  /* Iterera över alla datum, och visa ett Day-element för respektive. */
   return (
-    <div>
-      {midDayData.map((el) => (
-        <div key={el.dateTime}>
-          <div
-            className={styles.day}
-            key={el.dateTime}
-            onClick={handleClick}
-            id={el.dateTime}
-          >
-            <div className={styles.dateColumn}>{el.dateTime.slice(0, 10)}</div>
-            <div className={styles.tempColumn}>{el.temperature}</div>
-          </div>
-        </div>
-      ))}
+    <div className={styles.container}>
+      {dates.length !== 0 && structuredData ? (
+        dates.map((date) => (
+          <Day key={date} structuredData={structuredData} currentDate={date} />
+        ))
+      ) : (
+        <React.Fragment></React.Fragment>
+      )}
     </div>
   );
 };
